@@ -1,0 +1,13 @@
+[package]
+name = "doom-map-stats"
+version = "0.1.0"
+authors = ["kyle.coffey <kyle.coffey@tamu.edu>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+byteorder = "1.4"
+dialoguer = "0.8"
+thiserror = "1.0"
+derive_more = "0.99"
+chrono = ""
