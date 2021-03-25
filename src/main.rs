@@ -4,6 +4,7 @@ use std::fmt::Display;
 use std::path::PathBuf;
 use std::string::FromUtf8Error;
 
+use chrono::Local;
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::Input;
 use wad::Wad;
@@ -25,7 +26,15 @@ fn run() -> Result<(), Error> {
             break;
         }
 
+        let load_start = Local::now();
         let wad = Wad::from_file(wad_name)?;
+        let load_duration = Local::now() - load_start;
+        println!(
+            "Loaded {} lumps in {:6} seconds (avg. {:.3} lumps/sec)",
+            wad.length(),
+            load_duration.num_microseconds().unwrap() as f64 / 1e6,
+            wad.length() as f64 / (load_duration.num_microseconds().unwrap() as f64 / 1e6)
+        );
     }
 
     Ok(())

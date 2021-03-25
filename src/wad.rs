@@ -25,7 +25,7 @@ struct RawLump {
     name: [u8; 8],
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Lump {
     name: String,
     data: Vec<u8>,
@@ -174,6 +174,8 @@ impl Wad {
                 _ => LumpKind::Other,
             };
 
+            wad.lumps.push(lump.clone());
+
             if map_components.contains_key(&lump.kind) {
                 return Err(Error::InvalidLumpOrder(raw_lump.ptr, lump.name));
             } else if REQUIRED_MAP_COMPONENTS.contains(&lump.kind)
@@ -223,5 +225,9 @@ impl Wad {
         }
 
         Ok(wad)
+    }
+
+    pub fn length(&self) -> usize {
+        self.lumps.len()
     }
 }
